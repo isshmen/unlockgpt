@@ -3,6 +3,7 @@ import { ChatInterface } from "@/components/ChatInterface";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { X } from "lucide-react";
+import { MainNav } from "@/components/MainNav";
 
 const Index = () => {
   const [selectedService, setSelectedService] = useState<string | null>(null);
@@ -52,7 +53,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-[#1a1a1a] text-white">
-      <div className="p-10">
+      <MainNav />
+      
+      <div className="ml-[280px] p-10">
         <h1 className="text-4xl font-bold text-center mb-2">UnlockGPT</h1>
         <p className="text-[#999] text-center mb-10">AI-Powered Unlocking Tool</p>
         
