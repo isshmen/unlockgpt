@@ -51,11 +51,10 @@ const Index = () => {
   ];
 
   const renderContent = () => {
-    // If a service is selected, show its interface
     if (selectedService) {
       return (
-        <div className="w-full max-w-4xl mx-auto">
-          <div className="flex justify-between items-center mb-6">
+        <div className="w-full max-w-4xl mx-auto px-4">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
             <h2 className="text-2xl font-semibold">{selectedService} Tool</h2>
             <Button
               variant="ghost"
@@ -73,17 +72,17 @@ const Index = () => {
     switch (currentPage) {
       case 'homepage':
         return (
-          <>
-            <h1 className="text-4xl font-bold text-center mb-2">UnlockGPT</h1>
+          <div className="px-4">
+            <h1 className="text-3xl sm:text-4xl font-bold text-center mb-2">UnlockGPT</h1>
             <p className="text-[#999] text-center mb-10">AI-Powered Unlocking Tool</p>
             
-            <div className="bg-[#252525] p-8 rounded-xl max-w-3xl mx-auto mb-10 text-center">
-              <p className="text-lg">
+            <div className="bg-[#252525] p-6 sm:p-8 rounded-xl max-w-3xl mx-auto mb-10 text-center">
+              <p className="text-base sm:text-lg">
                 Welcome to UnlockGPT tool. Please choose the unlock tool you need from the menu and follow instructions.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 gap-6 max-w-7xl mx-auto">
               {services.map((service, index) => (
                 <div
                   key={index}
@@ -103,7 +102,7 @@ const Index = () => {
                 </div>
               ))}
             </div>
-          </>
+          </div>
         );
       case 'about':
         return (
@@ -164,7 +163,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-[#1a1a1a] text-white">
       <MainNav onPageChange={setCurrentPage} />
-      <div className="ml-[280px] p-10">
+      <div className="ml-0 sm:ml-[280px] p-4 sm:p-10">
         {renderContent()}
       </div>
     </div>
