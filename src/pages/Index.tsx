@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { ChatInterface } from "@/components/ChatInterface";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import { MainNav } from "@/components/MainNav";
+import { Button } from "@/components/ui/button";
+import { UnlockChatInterface } from "@/components/UnlockChatInterface";
 
 const Index = () => {
   const [currentPage, setCurrentPage] = useState('homepage');
@@ -51,6 +51,25 @@ const Index = () => {
   ];
 
   const renderContent = () => {
+    // If a service is selected, show its interface
+    if (selectedService) {
+      return (
+        <div className="w-full max-w-4xl mx-auto">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-semibold">{selectedService} Tool</h2>
+            <Button
+              variant="ghost"
+              onClick={() => setSelectedService(null)}
+              className="text-gray-400 hover:text-white"
+            >
+              Back to Services
+            </Button>
+          </div>
+          <UnlockChatInterface serviceName={selectedService} />
+        </div>
+      );
+    }
+
     switch (currentPage) {
       case 'homepage':
         return (
@@ -139,34 +158,8 @@ const Index = () => {
             </div>
           </>
         );
-      default:
-        return null;
     }
   };
-
-  // Show ChatInterface when a service is selected
-  if (selectedService) {
-    return (
-      <div className="min-h-screen bg-[#1a1a1a] text-white">
-        <MainNav onPageChange={setCurrentPage} />
-        <div className="ml-[280px] p-10">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-semibold">{selectedService} AI-Powered Tool</h2>
-              <Button
-                variant="ghost"
-                onClick={() => setSelectedService(null)}
-                className="text-gray-400 hover:text-white"
-              >
-                Back to Services
-              </Button>
-            </div>
-            <ChatInterface />
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-[#1a1a1a] text-white">
