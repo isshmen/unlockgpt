@@ -16,11 +16,11 @@ export const ChatMessage = ({ message, isBot, animate = true }: ChatMessageProps
       className={cn(
         "max-w-[80%] rounded-2xl px-4 py-3 mb-4",
         isBot
-          ? "bg-white/90 backdrop-blur-sm border border-gray-100 shadow-sm self-start"
-          : "bg-black text-white self-end"
+          ? "bg-[#222222] border border-[#333333] text-gray-200 self-start"
+          : "bg-[#2196f3] text-white self-end"
       )}
     >
-      <p className="text-sm leading-relaxed">{message}</p>
+      <p className="text-base leading-relaxed whitespace-pre-line">{message}</p>
     </motion.div>
   );
 };

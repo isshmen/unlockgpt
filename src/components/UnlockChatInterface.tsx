@@ -68,7 +68,6 @@ export const UnlockChatInterface = ({ serviceName }: UnlockChatInterfaceProps) =
     }
   };
 
-  // Initial message
   useEffect(() => {
     simulateTyping(
       "Welcome to the Carrier Unlock Tool! I am here to help you generating an unique unlock code for your device within next few minutes. No matter which phone's model or which carrier has locked your device, I support any of them.\n\nTo get started, send me your device's IMEI. A quick way to find the IMEI is by typing *#06# in your keypad and paste the IMEI below."
@@ -76,7 +75,7 @@ export const UnlockChatInterface = ({ serviceName }: UnlockChatInterfaceProps) =
   }, []);
 
   return (
-    <div className="flex flex-col bg-gradient-to-b from-gray-900 to-gray-800 rounded-xl overflow-hidden">
+    <div className="flex flex-col bg-[#1a1a1a] rounded-xl overflow-hidden border border-[#333333]">
       <div className="flex-1 overflow-y-auto p-4 max-h-[600px]">
         <div className="max-w-3xl mx-auto flex flex-col space-y-4">
           {messages.map((message, index) => (
@@ -91,14 +90,14 @@ export const UnlockChatInterface = ({ serviceName }: UnlockChatInterfaceProps) =
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="p-4 border-t border-gray-700 bg-gray-800">
+      <form onSubmit={handleSubmit} className="p-4 border-t border-[#333333] bg-[#222222]">
         <div className="max-w-3xl mx-auto">
           <Input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
-            className="w-full bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+            className="w-full bg-[#1a1a1a] border-[#333333] text-white placeholder-gray-400 text-base"
           />
         </div>
       </form>

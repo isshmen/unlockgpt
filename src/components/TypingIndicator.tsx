@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 export const TypingIndicator = () => {
   return (
     <div className="flex items-center space-x-1 px-4 py-3 max-w-[80px] 
-                    rounded-2xl bg-white/90 backdrop-blur-sm border border-gray-100 shadow-sm">
+                    rounded-2xl bg-[#222222] border border-[#333333]">
       {[0, 1, 2].map((dot) => (
         <motion.div
           key={dot}
