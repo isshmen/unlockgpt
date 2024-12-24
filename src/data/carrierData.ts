@@ -194,3 +194,29 @@ export const carriersByCountry = {
   'Zambia': ['Airtel Zambia', 'MTN Zambia', 'Zamtel'],
   'Zimbabwe': ['Econet Wireless Zimbabwe', 'NetOne', 'Telecel Zimbabwe']
 };
+
+export const unlockingMessages = [
+  "Initialising...",
+  "Performing server authentication: connect_to_servers...",
+  "Response: Successfully authenticated secure server connection.",
+  "We're connecting your IMEI {imei} to our database...",
+  "Importing files for encryption of user request",
+  "Encrypting request: kernel.open_ssl_enc (for IMEI: {imei})",
+  "Response: IMEI Successfully encrypted",
+  "Your IMEI has been connected successfully...",
+  "Encrypting request: kernel.open_ssl_enc (for Country & Carrier: {country}, {carrier})",
+  "Response: Country and Carrier Successfully encrypted",
+  "We're looking through {carrier} in {country}....",
+  "We've found the {carrier} and {country} in our database",
+  "Trying to connect to {carrier} through our backdoor servers...",
+  "Initialization method: kernel.cc_server.application.main.init();",
+  "Injecting into main method: inject_ssl(kernel.cc_server.application.main.init);",
+  "We have successfully connected to {carrier} database...",
+  "Injecting the information securely into encryption server...",
+  "Response: All files were imported successfully.",
+  "We're trying generating the unlock code for {imei} locked to {carrier}, {country}....",
+  "Initialization method: kernel.cc_server.application.main.init();",
+  "Response: Successfully extracted the unlock code from {carrier}",
+  "ALL DONE! Please wait as we redirect you to download the unlock code and unlocking instructions page...",
+  "Please wait, redirecting...."
+];
