@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { ChatMessage } from "./ChatMessage";
 import { TypingIndicator } from "./TypingIndicator";
 import { Input } from "./ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { carriersByCountry } from "@/data/carrierData";
 
 interface Message {
   text: string;
@@ -19,6 +21,8 @@ export const UnlockChatInterface = ({ serviceName }: UnlockChatInterfaceProps) =
   const [isTyping, setIsTyping] = useState(false);
   const [input, setInput] = useState("");
   const [imei, setImei] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState<string>("");
+  const [selectedCarrier, setSelectedCarrier] = useState<string>("");
 
   const addMessage = (text: string, isBot: boolean) => {
     setMessages((prev) => [...prev, { text, isBot }]);
@@ -55,7 +59,7 @@ export const UnlockChatInterface = ({ serviceName }: UnlockChatInterfaceProps) =
         break;
       case "confirmation":
         if (userInput.toLowerCase() === "continue") {
-          await simulateTyping("Please select your phone's country and carrier:");
+          await simulateTyping("Please select your phone's country and carrier from the dropdowns below:");
           setCurrentStep("country_carrier");
         } else if (userInput.toLowerCase() === "back") {
           setCurrentStep("initial");
@@ -63,9 +67,17 @@ export const UnlockChatInterface = ({ serviceName }: UnlockChatInterfaceProps) =
         }
         break;
       case "country_carrier":
-        // Handle country and carrier input here
+        if (selectedCountry && selectedCarrier) {
+          await simulateTyping(`Thank you for selecting ${selectedCountry} and ${selectedCarrier}. We'll proceed with the unlock process.`);
+          // Add next step logic here
+        }
         break;
     }
+  };
+
+  const handleCountryChange = (value: string) => {
+    setSelectedCountry(value);
+    setSelectedCarrier("");
   };
 
   useEffect(() => {
@@ -87,6 +99,38 @@ export const UnlockChatInterface = ({ serviceName }: UnlockChatInterfaceProps) =
             />
           ))}
           {isTyping && <TypingIndicator />}
+          
+          {currentStep === "country_carrier" && (
+            <div className="space-y-4 w-full">
+              <Select onValueChange={handleCountryChange}>
+                <SelectTrigger className="w-full bg-[#222222] border-[#333333] text-white">
+                  <SelectValue placeholder="Select Country" />
+                </SelectTrigger>
+                <SelectContent className="bg-[#222222] border-[#333333] text-white">
+                  {Object.keys(carriersByCountry).map((country) => (
+                    <SelectItem key={country} value={country} className="hover:bg-[#333333]">
+                      {country}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              {selectedCountry && (
+                <Select onValueChange={setSelectedCarrier}>
+                  <SelectTrigger className="w-full bg-[#222222] border-[#333333] text-white">
+                    <SelectValue placeholder="Select Carrier" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[#222222] border-[#333333] text-white">
+                    {carriersByCountry[selectedCountry as keyof typeof carriersByCountry].map((carrier) => (
+                      <SelectItem key={carrier} value={carrier} className="hover:bg-[#333333]">
+                        {carrier}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
