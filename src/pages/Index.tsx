@@ -2,10 +2,12 @@ import { useState } from "react";
 import { MainNav } from "@/components/MainNav";
 import { Button } from "@/components/ui/button";
 import { UnlockChatInterface } from "@/components/UnlockChatInterface";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
   const [currentPage, setCurrentPage] = useState('homepage');
   const [selectedService, setSelectedService] = useState<string | null>(null);
+  const isMobile = useIsMobile();
 
   const services = [
     {
@@ -58,7 +60,10 @@ const Index = () => {
             <h2 className="text-2xl font-semibold">{selectedService} Tool</h2>
             <Button
               variant="ghost"
-              onClick={() => setSelectedService(null)}
+              onClick={() => {
+                setSelectedService(null);
+                setCurrentPage('homepage');
+              }}
               className="text-gray-400 hover:text-white"
             >
               Back to Services
@@ -82,7 +87,7 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
               {services.map((service, index) => (
                 <div
                   key={index}
@@ -161,11 +166,12 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a] text-white">
-      <MainNav onPageChange={setCurrentPage} />
-      <div className="ml-0 sm:ml-[280px] p-4 sm:p-10">
+    <div className="min-h-screen bg-[#1a1a1a] text-white flex flex-col">
+      <div className={`${isMobile ? '' : 'ml-[280px]'} p-4 sm:p-10 flex-grow`}>
         {renderContent()}
       </div>
+      {isMobile && <MainNav onPageChange={setCurrentPage} />}
+      {!isMobile && <MainNav onPageChange={setCurrentPage} />}
     </div>
   );
 };
