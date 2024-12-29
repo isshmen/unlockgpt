@@ -79,8 +79,8 @@ export const UnlockChatInterface = ({ serviceName }: UnlockChatInterfaceProps) =
         break;
       case "confirmation":
         if (userInput.toLowerCase() === "continue") {
-          await simulateTyping("Please select your phone's country and carrier from the dropdowns below:");
           setCurrentStep("country_carrier");
+          await simulateTyping("Please select your phone's country and carrier from the dropdowns below:");
         } else if (userInput.toLowerCase() === "back") {
           setCurrentStep("initial");
           await simulateTyping("Welcome back! Please enter your device's IMEI number:");
@@ -98,6 +98,8 @@ export const UnlockChatInterface = ({ serviceName }: UnlockChatInterfaceProps) =
           setCurrentStep("generate_code");
         } else if (userInput.toLowerCase() === "back") {
           setCurrentStep("country_carrier");
+          setSelectedCountry("");
+          setSelectedCarrier("");
           await simulateTyping("Please select your phone's country and carrier from the dropdowns below:");
         }
         break;
@@ -118,9 +120,13 @@ export const UnlockChatInterface = ({ serviceName }: UnlockChatInterfaceProps) =
     );
   }, []);
 
+  console.log('Current step:', currentStep); // Debug log
+  console.log('Selected country:', selectedCountry); // Debug log
+  console.log('Selected carrier:', selectedCarrier); // Debug log
+
   return (
     <>
-      <div className="flex flex-col bg-[#1a1a1a] rounded-xl overflow-hidden border border-[#333333]">
+      <div className="flex flex-col bg-[#1a1a1a] rounded-xl overflow-hidden border border-[#333333] min-h-[600px]">
         <ChatContainer
           messages={messages}
           isTyping={isTyping}
