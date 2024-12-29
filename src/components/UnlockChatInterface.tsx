@@ -149,7 +149,7 @@ export const UnlockChatInterface = ({ serviceName }: UnlockChatInterfaceProps) =
             
             {currentStep === "country_carrier" && (
               <div className="space-y-4 w-full">
-                <Select onValueChange={handleCountryChange}>
+                <Select onValueChange={handleCountryChange} value={selectedCountry}>
                   <SelectTrigger className="w-full bg-[#222222] border-[#333333] text-white">
                     <SelectValue placeholder="Select Country" />
                   </SelectTrigger>
@@ -162,23 +162,28 @@ export const UnlockChatInterface = ({ serviceName }: UnlockChatInterfaceProps) =
                   </SelectContent>
                 </Select>
 
-                {selectedCountry && (
-                  <Select onValueChange={setSelectedCarrier}>
-                    <SelectTrigger className="w-full bg-[#222222] border-[#333333] text-white">
-                      <SelectValue placeholder="Select Carrier" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-[#222222] border-[#333333] text-white">
-                      {carriersByCountry[selectedCountry as keyof typeof carriersByCountry].map((carrier) => (
+                <Select 
+                  onValueChange={setSelectedCarrier} 
+                  value={selectedCarrier}
+                  disabled={!selectedCountry}
+                >
+                  <SelectTrigger className="w-full bg-[#222222] border-[#333333] text-white">
+                    <SelectValue placeholder={selectedCountry ? "Select Carrier" : "Select Country First"} />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[#222222] border-[#333333] text-white">
+                    {selectedCountry ? 
+                      carriersByCountry[selectedCountry as keyof typeof carriersByCountry].map((carrier) => (
                         <SelectItem key={carrier} value={carrier} className="hover:bg-[#333333]">
                           {carrier}
                         </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                )}
+                      ))
+                      :
+                      <SelectItem value="" disabled>Please select a country first</SelectItem>
+                    }
+                  </SelectContent>
+                </Select>
               </div>
             )}
-            {/* Add an empty div with a ref for scrolling */}
             <div ref={messagesEndRef} />
           </div>
         </div>
