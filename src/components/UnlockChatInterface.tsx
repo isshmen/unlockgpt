@@ -1,16 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { ChatMessage } from "./ChatMessage";
-import { TypingIndicator } from "./TypingIndicator";
+import { ChatContainer } from "./chat/ChatContainer";
 import { Input } from "./ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { carriersByCountry, unlockingMessages } from "@/data/carrierData";
+import { unlockingMessages } from "@/data/carrierData";
 import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction } from "./ui/alert-dialog";
-
-interface Message {
-  text: string;
-  isBot: boolean;
-}
+import { Message } from "@/types/chat";
 
 interface UnlockChatInterfaceProps {
   serviceName: string;
@@ -27,17 +20,15 @@ export const UnlockChatInterface = ({ serviceName }: UnlockChatInterfaceProps) =
   const [showInstructions, setShowInstructions] = useState(false);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   
-  // Add a ref for the messages container
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Scroll to bottom whenever messages change
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isTyping]); // Scroll when messages or typing indicator changes
+  }, [messages, isTyping]);
 
   const addMessage = (text: string, isBot: boolean) => {
     setMessages((prev) => [...prev, { text, isBot }]);
@@ -121,11 +112,6 @@ export const UnlockChatInterface = ({ serviceName }: UnlockChatInterfaceProps) =
     }
   };
 
-  const handleCountryChange = (value: string) => {
-    setSelectedCountry(value);
-    setSelectedCarrier("");
-  };
-
   useEffect(() => {
     simulateTyping(
       "Welcome to the Carrier Unlock Tool! I am here to help you generating an unique unlock code for your device within next few minutes. No matter which phone's model or which carrier has locked your device, I support any of them.\n\nTo get started, send me your device's IMEI. A quick way to find the IMEI is by typing *#06# in your keypad and paste the IMEI below."
@@ -135,58 +121,16 @@ export const UnlockChatInterface = ({ serviceName }: UnlockChatInterfaceProps) =
   return (
     <>
       <div className="flex flex-col bg-[#1a1a1a] rounded-xl overflow-hidden border border-[#333333]">
-        <div className="flex-1 overflow-y-auto p-4 max-h-[600px]">
-          <div className="max-w-3xl mx-auto flex flex-col space-y-4">
-            {messages.map((message, index) => (
-              <ChatMessage
-                key={index}
-                message={message.text}
-                isBot={message.isBot}
-                animate={index === messages.length - 1}
-              />
-            ))}
-            {isTyping && <TypingIndicator />}
-            
-            {currentStep === "country_carrier" && (
-              <div className="space-y-4 w-full">
-                <Select onValueChange={handleCountryChange} value={selectedCountry}>
-                  <SelectTrigger className="w-full bg-[#222222] border-[#333333] text-white">
-                    <SelectValue placeholder="Select Country" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[#222222] border-[#333333] text-white">
-                    {Object.keys(carriersByCountry).map((country) => (
-                      <SelectItem key={country} value={country} className="hover:bg-[#333333]">
-                        {country}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
-                <Select 
-                  onValueChange={setSelectedCarrier} 
-                  value={selectedCarrier}
-                  disabled={!selectedCountry}
-                >
-                  <SelectTrigger className="w-full bg-[#222222] border-[#333333] text-white">
-                    <SelectValue placeholder={selectedCountry ? "Select Carrier" : "Select Country First"} />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[#222222] border-[#333333] text-white">
-                    {selectedCountry ? 
-                      carriersByCountry[selectedCountry as keyof typeof carriersByCountry].map((carrier) => (
-                        <SelectItem key={carrier} value={carrier} className="hover:bg-[#333333]">
-                          {carrier}
-                        </SelectItem>
-                      ))
-                      :
-                      <SelectItem value="" disabled>Please select a country first</SelectItem>
-                    }
-                  </SelectContent>
-                </Select>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-        </div>
+        <ChatContainer
+          messages={messages}
+          isTyping={isTyping}
+          currentStep={currentStep}
+          selectedCountry={selectedCountry}
+          selectedCarrier={selectedCarrier}
+          onCountryChange={setSelectedCountry}
+          onCarrierChange={setSelectedCarrier}
+          messagesEndRef={messagesEndRef}
+        />
 
         <form onSubmit={handleSubmit} className="p-4 border-t border-[#333333] bg-[#222222]">
           <div className="max-w-3xl mx-auto">
