@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { ChatMessage } from "./ChatMessage";
 import { TypingIndicator } from "./TypingIndicator";
@@ -26,6 +26,18 @@ export const UnlockChatInterface = ({ serviceName }: UnlockChatInterfaceProps) =
   const [selectedCarrier, setSelectedCarrier] = useState<string>("");
   const [showInstructions, setShowInstructions] = useState(false);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+  
+  // Add a ref for the messages container
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Scroll to bottom whenever messages change
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isTyping]); // Scroll when messages or typing indicator changes
 
   const addMessage = (text: string, isBot: boolean) => {
     setMessages((prev) => [...prev, { text, isBot }]);
@@ -166,6 +178,8 @@ export const UnlockChatInterface = ({ serviceName }: UnlockChatInterfaceProps) =
                 )}
               </div>
             )}
+            {/* Add an empty div with a ref for scrolling */}
+            <div ref={messagesEndRef} />
           </div>
         </div>
 
