@@ -38,15 +38,11 @@ export const SelectCountryCarrier = ({
           <SelectValue placeholder={selectedCountry ? "Select Carrier" : "Select Country First"} />
         </SelectTrigger>
         <SelectContent className="bg-[#222222] border-[#333333] text-white">
-          {selectedCountry ? 
-            carriersByCountry[selectedCountry as keyof typeof carriersByCountry].map((carrier) => (
-              <SelectItem key={carrier} value={carrier} className="hover:bg-[#333333]">
-                {carrier}
-              </SelectItem>
-            ))
-            :
-            <SelectItem value="" disabled>Please select a country first</SelectItem>
-          }
+          {selectedCountry && carriersByCountry[selectedCountry as keyof typeof carriersByCountry].map((carrier) => (
+            <SelectItem key={carrier} value={carrier} className="hover:bg-[#333333]">
+              {carrier}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
     </div>
