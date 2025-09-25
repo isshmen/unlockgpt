@@ -87,20 +87,28 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+            <div className="max-w-4xl mx-auto space-y-4">
               {services.map((service, index) => (
                 <div
                   key={index}
-                  className="bg-[#252525] p-6 rounded-xl transition-all duration-300 hover:bg-[#2a2a2a] hover:transform hover:-translate-y-1 hover:shadow-xl"
+                  className="flex items-center justify-between p-4 border-b border-[#333] hover:bg-[#252525] transition-colors cursor-pointer"
+                  onClick={() => setSelectedService(service.title)}
                 >
-                  <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                  <div className="inline-block bg-[#1a1a1a] text-[#666] text-sm px-2 py-1 rounded mb-3">
-                    {service.version}
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-1">
+                      <h3 className="text-lg font-semibold">{service.title}</h3>
+                      <span className="bg-[#1a1a1a] text-[#666] text-xs px-2 py-1 rounded">
+                        {service.version}
+                      </span>
+                    </div>
+                    <p className="text-[#999] text-sm">{service.description}</p>
                   </div>
-                  <p className="text-[#999] text-sm mb-4">{service.description}</p>
                   <Button 
-                    onClick={() => setSelectedService(service.title)}
-                    className="w-full bg-[#2196f3] hover:bg-[#1976d2] text-white"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedService(service.title);
+                    }}
+                    className="ml-4 bg-[#2196f3] hover:bg-[#1976d2] text-white"
                   >
                     Access
                   </Button>
