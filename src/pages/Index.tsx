@@ -52,6 +52,11 @@ const Index = () => {
     }
   ];
 
+  const handlePageChange = (page: string) => {
+    setSelectedService(null);
+    setCurrentPage(page);
+  };
+
   const renderContent = () => {
     if (selectedService) {
       return (
@@ -178,8 +183,8 @@ const Index = () => {
       <div className={`${isMobile ? '' : 'ml-[280px]'} p-4 sm:p-10 flex-grow`}>
         {renderContent()}
       </div>
-      {isMobile && <MainNav onPageChange={setCurrentPage} />}
-      {!isMobile && <MainNav onPageChange={setCurrentPage} />}
+      {isMobile && <MainNav onPageChange={handlePageChange} />}
+      {!isMobile && <MainNav onPageChange={handlePageChange} />}
     </div>
   );
 };
