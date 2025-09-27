@@ -1,17 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>unlocker-buddy-bot</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
-    <meta property="og:image" content="/og-image.png" />
-  </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnlockGPT - AI-Powered Unlocking Tool</title>
+    <meta name="description" content="AI-Powered unlocking solutions for your mobile devices. Carrier unlock, FRP bypass, iCloud unlock and more." />
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="public/favicon.ico" />
+</head>
+<body>
+    <div id="app" class="min-h-screen bg-dark text-white flex flex-col">
+        <!-- Main Content -->
+        <div id="main-content" class="main-content p-4 sm:p-10 flex-grow">
+            <!-- Homepage Content -->
+            <div id="homepage" class="page-content active">
+                <div class="px-4">
+                    <h1 class="text-3xl sm:text-4xl font-bold text-center mb-2">UnlockGPT</h1>
+                    <p class="text-gray text-center mb-10">AI-Powered Unlocking Tool</p>
+                    
+                    <div class="bg-card p-6 sm:p-8 rounded-xl max-w-3xl mx-auto mb-10 text-center">
+                        <p class="text-base sm:text-lg">
+                            Welcome to UnlockGPT tool. Please choose the unlock tool you need from the menu and follow instructions.
+                        </p>
+                    </div>
 
-  <body>
-    <div id="root"></div>
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+                    <div class="max-w-4xl mx-auto space-y-4" id="services-list">
+                        <!-- Services will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Page -->
+            <div id="about" class="page-content">
+                <h1 class="text-4xl font-bold text-center mb-2">About Us</h1>
+                <div class="bg-card p-8 rounded-xl max-w-3xl mx-auto">
+                    <p class="text-lg">
+                        We are a team of experts dedicated to providing the best unlocking solutions for your mobile devices. 
+                        Our tools are designed to work efficiently and securely.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Review Page -->
+            <div id="review" class="page-content">
+                <h1 class="text-4xl font-bold text-center mb-2">Reviews</h1>
+                <div class="bg-card p-8 rounded-xl max-w-3xl mx-auto">
+                    <p class="text-lg mb-4">Here are some reviews from our users:</p>
+                    <ul class="space-y-2">
+                        <li>"Great service! My phone was unlocked in minutes." - John</li>
+                        <li>"Highly recommended for iCloud unlock." - Sarah</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Contact Page -->
+            <div id="contact" class="page-content">
+                <h1 class="text-4xl font-bold text-center mb-2">Contact Us</h1>
+                <div class="bg-card p-8 rounded-xl max-w-3xl mx-auto">
+                    <form class="space-y-4" id="contact-form">
+                        <div>
+                            <label class="block text-sm mb-2">Name</label>
+                            <input type="text" class="input w-full" />
+                        </div>
+                        <button type="submit" class="btn btn-primary w-full">
+                            Submit
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Terms Page -->
+            <div id="terms" class="page-content">
+                <h1 class="text-4xl font-bold text-center mb-2">Terms & Conditions</h1>
+                <div class="bg-card p-8 rounded-xl max-w-3xl mx-auto">
+                    <p class="text-lg">
+                        Please read our terms and conditions carefully before using our services.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Service Chat Interface -->
+            <div id="service-interface" class="page-content">
+                <div class="w-full max-w-4xl mx-auto px-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                        <h2 class="text-2xl font-semibold" id="service-title">Service Tool</h2>
+                        <button id="back-to-services" class="btn btn-ghost text-gray-400 hover:text-white">
+                            Back to Services
+                        </button>
+                    </div>
+                    
+                    <div class="flex flex-col bg-dark-secondary rounded-xl overflow-hidden border border-border min-h-[600px]">
+                        <!-- Chat Container -->
+                        <div id="chat-container" class="flex-1 overflow-y-auto p-4 max-h-[600px]">
+                            <div class="max-w-3xl mx-auto flex flex-col space-y-4" id="messages-container">
+                                <!-- Messages will be populated here -->
+                            </div>
+                        </div>
+
+                        <!-- Country/Carrier Selection -->
+                        <div id="country-carrier-selector" class="space-y-4 w-full p-4 hidden">
+                            <select id="country-select" class="select w-full">
+                                <option value="">Select Country</option>
+                            </select>
+                            <select id="carrier-select" class="select w-full" disabled>
+                                <option value="">Select Country First</option>
+                            </select>
+                        </div>
+
+                        <!-- Chat Input Form -->
+                        <form id="chat-form" class="p-4 border-t border-border bg-card">
+                            <div class="max-w-3xl mx-auto">
+                                <input 
+                                    type="text" 
+                                    id="chat-input" 
+                                    placeholder="Type your message..."
+                                    class="input w-full"
+                                />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav id="main-nav" class="main-nav">
+            <div class="nav-brand">▲</div>
+            <div class="nav-items">
+                <button class="nav-item active" data-page="homepage">
+                    <span class="nav-icon">🏠</span>
+                    Homepage
+                </button>
+                <button class="nav-item" data-page="about">
+                    <span class="nav-icon">ℹ️</span>
+                    About
+                </button>
+                <button class="nav-item" data-page="review">
+                    <span class="nav-icon">⭐</span>
+                    Review
+                </button>
+                <button class="nav-item" data-page="contact">
+                    <span class="nav-icon">📞</span>
+                    Contact
+                </button>
+                <button class="nav-item" data-page="terms">
+                    <span class="nav-icon">📄</span>
+                    Terms & Conditions
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Instructions Modal -->
+    <div id="instructions-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Unlocking Instructions</h3>
+            </div>
+            <div class="modal-body">
+                <p>To unlock your phone please follow these steps:</p>
+                <ol>
+                    <li>Insert a new SIM card.</li>
+                    <li>Restart the device.</li>
+                    <li>Type your generated unlock code and wait to connect to the carrier.</li>
+                    <li>Enjoy your unlocked phone.</li>
+                </ol>
+            </div>
+            <div class="modal-footer">
+                <button id="get-unlock-code" class="btn btn-primary">
+                    Get Your Unlock Code
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
 </html>
